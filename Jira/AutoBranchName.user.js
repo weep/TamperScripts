@@ -17,7 +17,6 @@
         var replaced = text.replace(' - ', '-');
         replaced = replaced.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
         replaced = replaced.replace(/[^\w\s]/gi, '')
-        replaced = replaced.replace('/', '-')
         replaced = replaced.split(' ').join('-');
         return replaced;
     }
