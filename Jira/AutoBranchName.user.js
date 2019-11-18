@@ -15,9 +15,10 @@
 
     function formatBranchName(text) {
         var replaced = text.replace(' - ', '-');
-        replaced = text.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
-        replaced = text.replace(/[^\w\s]/gi, '')
-        replaced = text.split(' ').join('-');
+        replaced = replaced.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+        replaced = replaced.replace(/[^\w\s]/gi, '')
+        replaced = replaced.replace('/', '-')
+        replaced = replaced.split(' ').join('-');
         return replaced;
     }
 
@@ -59,7 +60,6 @@
                 text = formatBranchName(text);
                 child.innerText = `feature/${id}_${text}`;
 
-                //header.appendChild(child);
                 header.insertBefore(child, header.childNodes[1]);
             }
         }, 100)
