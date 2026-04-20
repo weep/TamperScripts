@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         OsrsWiki - FilterTable
 // @namespace    http://tampermonkey.net/
-// @version      2026-04-20T16:17:00Z
+// @version      2026-04-20T16:23:00Z
 // @description  try to take over the world!
 // @author       Weep
 // @updateURL    https://github.com/weep/TamperScripts/raw/master/OsrsWiki/FilterTable.meta.js
@@ -25,8 +25,6 @@
     function addSearchToTable(table) {
         const tbody = table.querySelector('tbody');
         const rows = Array.from(tbody.querySelectorAll('tr'));
-
-        console.log({table, rows});
 
         const searchContainer = document.createElement('div');
         const searchInput = document.createElement('input');
@@ -68,8 +66,6 @@
         } else {
             row.style.visibility = 'collapse';
         }
-
-        console.log({row, outcome});
     }
 })();
 
