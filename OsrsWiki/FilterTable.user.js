@@ -4,7 +4,7 @@
 // @version      2026-04-20
 // @description  try to take over the world!
 // @author       Weep
-// @version      0.1
+// @version      0.2
 // @updateURL    https://github.com/weep/TamperScripts/raw/master/OsrsWiki/FilterTable.meta.js
 // @downloadURL  https://github.com/weep/TamperScripts/raw/master/OsrsWiki/FilterTable.user.js
 // @match        https://oldschool.runescape.wiki/*
@@ -27,15 +27,25 @@
         const tbody = table.querySelector('tbody');
         const rows = Array.from(tbody.querySelectorAll('tr'));
 
-        console.log({ table, rows });
+        console.log({table, rows});
 
         const searchContainer = document.createElement('div');
         const searchInput = document.createElement('input');
+        const clearButton = document.createElement('button');
 
         searchContainer.appendChild(searchInput);
+        searchContainer.appendChild(clearButton);
+
+        clearButton.textContent = 'Clear';
+        clearButton.style.marginLeft = '10px';
 
         searchInput.addEventListener('input', (event) => {
             rows.forEach((row) => filterRow(row, event.target.value));
+        });
+
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            rows.forEach((row) => filterRow(row, ''));
         });
 
         table.parentElement.insertBefore(searchContainer, table);
@@ -60,6 +70,7 @@
             row.style.visibility = 'collapse';
         }
 
-        console.log({ row, outcome });
+        console.log({row, outcome});
     }
 })();
+
