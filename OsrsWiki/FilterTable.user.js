@@ -15,41 +15,51 @@
 (function () {
     'use strict';
 
-    // Your code here...
-    const tables = document.querySelectorAll(".wikitable");
+    // Select all tables with class "wikitable" and add search functionality
+    const tables = document.querySelectorAll('.wikitable');
     tables.forEach(addSearchToTable);
 
+    /**
+     * Adds a search input to the table and filters rows based on input value
+     * @param {HTMLTableElement} table - The table to add search functionality to
+     */
     function addSearchToTable(table) {
-        var tbody = table.getElementsByTagName("tbody")[0];
-        var rbodyrows = tbody.getElementsByTagName("tr");
-        let rows = [...rbodyrows];
-        console.log({table, rows});
-        const div = document.createElement("div");
-        const input = document.createElement("input");
-        div.appendChild(input);
-        input.onchange = change => {
-            rows.forEach(p => filterRow(p, change.target.value));
-            //[...tableBody.childNodes].forEach(console.log);
-        };
-        table.parentElement.insertBefore(div, table);
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        console.log({ table, rows });
+
+        const searchContainer = document.createElement('div');
+        const searchInput = document.createElement('input');
+
+        searchContainer.appendChild(searchInput);
+
+        searchInput.addEventListener('input', (event) => {
+            rows.forEach((row) => filterRow(row, event.target.value));
+        });
+
+        table.parentElement.insertBefore(searchContainer, table);
     }
 
+    /**
+     * Filters a table row based on the search input value
+     * @param {HTMLTableRowElement} row - The row to filter
+     * @param {string} text - The search input value
+     */
     function filterRow(row, text) {
-        if (row.id === "") return;
+        if (row.id === '') return;
 
-        let re = new RegExp(String.raw`${text}`, "ig");
-        var match = row.innerText.match(re);
+        const regex = new RegExp(text, 'gi');
+        const match = row.textContent.match(regex);
 
-        let outcome = (match || text === '' || text === undefined);
+        const outcome = match !== null || text === '' || text === undefined;
 
-        if (outcome) {
-            console.log({row, outcome})
-            row.style.visibility = 'visible'
+        if (outcome && !row.classList.contains('wikisync-completed')) {
+            row.style.visibility = 'visible';
         } else {
-            row.style.visibility = 'collapse'
+            row.style.visibility = 'collapse';
         }
-        if (row.classList.contains("wikisync-completed")) {
-            row.style.visibility = 'collapse'
-        }
+
+        console.log({ row, outcome });
     }
 })();
