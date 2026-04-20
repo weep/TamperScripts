@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         OsrsWiki - FilterTable
 // @namespace    http://tampermonkey.net/
-// @version      2026-04-20T16:23:00Z
+// @version      2026-04-20T19:14:00Z
 // @description  try to take over the world!
 // @author       Weep
 // @updateURL    https://github.com/weep/TamperScripts/raw/master/OsrsWiki/FilterTable.meta.js
@@ -15,7 +15,7 @@
     'use strict';
 
     // Select all tables with class "wikitable" and add search functionality
-    const tables = document.querySelectorAll('.wikitable');
+    const tables = document.querySelectorAll('.wikitable.league-tasks');
     tables.forEach(addSearchToTable);
 
     /**
@@ -33,8 +33,8 @@
         searchContainer.appendChild(searchInput);
         searchContainer.appendChild(clearButton);
 
-        clearButton.textContent = 'Clear';
-        clearButton.style.marginLeft = '10px';
+        clearButton.className = 'mw-headline-lockbutton';
+        clearButton.innerHTML = '<span class="mw-headline-lockbutton-icon">×</span>';
 
         searchInput.addEventListener('input', (event) => {
             rows.forEach((row) => filterRow(row, event.target.value));
@@ -68,4 +68,3 @@
         }
     }
 })();
-
