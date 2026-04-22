@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         OsrsWiki - FilterTable
 // @namespace    http://tampermonkey.net/
-// @version      2026-04-20T19:14:00Z
+// @version      2026-04-22T11:04:00Z
 // @description  try to take over the world!
 // @author       Weep
 // @updateURL    https://github.com/weep/TamperScripts/raw/master/OsrsWiki/FilterTable.meta.js

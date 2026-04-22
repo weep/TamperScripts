@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         OsrsWiki - FilterTable
 // @namespace    http://tampermonkey.net/
-// @version      2026-04-20T19:14:00Z
+// @version      2026-04-22T11:04:00Z
 // @description  try to take over the world!
 // @author       Weep
 // @updateURL    https://github.com/weep/TamperScripts/raw/master/OsrsWiki/FilterTable.meta.js
@@ -16,6 +16,7 @@
 
     // Select all tables with class "wikitable" and add search functionality
     const tables = document.querySelectorAll('.wikitable.league-tasks');
+    let hideCompletedChecked = false;
     tables.forEach(addSearchToTable);
 
     /**
@@ -37,10 +38,12 @@
         clearButton.innerHTML = '<span class="mw-headline-lockbutton-icon">×</span>';
 
         searchInput.addEventListener('input', (event) => {
+            hideCompletedChecked = document.querySelector(".rs-wikisync-hide-completed input").checked;
             rows.forEach((row) => filterRow(row, event.target.value));
         });
 
         clearButton.addEventListener('click', () => {
+            hideCompletedChecked = document.querySelector(".rs-wikisync-hide-completed input").checked;
             searchInput.value = '';
             rows.forEach((row) => filterRow(row, ''));
         });
@@ -61,7 +64,7 @@
 
         const outcome = match !== null || text === '' || text === undefined;
 
-        if (outcome && !row.classList.contains('wikisync-completed')) {
+        if (outcome && !(row.classList.contains('wikisync-completed') && hideCompletedChecked)) {
             row.style.visibility = 'visible';
         } else {
             row.style.visibility = 'collapse';
